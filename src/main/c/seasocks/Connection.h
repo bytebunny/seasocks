@@ -212,7 +212,7 @@ private:
     std::shared_ptr<Response> _response;
     TransferEncoding _transferEncoding;
     unsigned _chunk;
-    std::shared_ptr<Writer> _writer;
+    std::unique_ptr<Writer> _writer;
 
     void parsePerMessageDeflateHeader(const std::string& header);
     bool _perMessageDeflate = false;

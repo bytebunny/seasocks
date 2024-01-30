@@ -38,7 +38,7 @@ class ResponseWriter;
 class Response {
 public:
     virtual ~Response() = default;
-    virtual void handle(std::shared_ptr<ResponseWriter> writer) = 0;
+    virtual void handle( ResponseWriter* writer) = 0;
 
     // Called when the connection this response is being sent on is closed.
     virtual void cancel() = 0;

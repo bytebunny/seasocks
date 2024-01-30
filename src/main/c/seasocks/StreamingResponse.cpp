@@ -29,7 +29,7 @@
 
 using namespace seasocks;
 
-void StreamingResponse::handle(std::shared_ptr<ResponseWriter> writer) {
+void StreamingResponse::handle(ResponseWriter* writer) {
     writer->begin(responseCode(), transferEncoding());
 
     auto headers = getHeaders();

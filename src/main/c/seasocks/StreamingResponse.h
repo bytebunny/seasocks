@@ -40,7 +40,7 @@ class StreamingResponse : public Response {
 
 public:
     virtual ~StreamingResponse() = default;
-    virtual void handle(std::shared_ptr<ResponseWriter> writer) override;
+    virtual void handle( ResponseWriter* writer ) override;
     virtual void cancel() override;
 
     virtual std::shared_ptr<std::istream> getStream() const = 0;

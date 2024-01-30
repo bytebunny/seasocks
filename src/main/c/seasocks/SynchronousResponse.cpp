@@ -29,7 +29,7 @@
 
 using namespace seasocks;
 
-void SynchronousResponse::handle(std::shared_ptr<ResponseWriter> writer) {
+void SynchronousResponse::handle( ResponseWriter* writer) {
     auto rc = responseCode();
     if (!isOk(rc)) {
         writer->error(rc, std::string(payload(), payloadSize()));

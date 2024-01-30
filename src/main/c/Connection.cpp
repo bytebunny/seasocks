@@ -251,7 +251,7 @@ Connection::Connection(
           _shutdownByUser(false),
           _transferEncoding(TransferEncoding::Raw),
           _chunk(0u),
-          _writer(std::make_shared<Writer>(*this)),
+          _writer(std::make_unique<Writer>(*this)),
           _state(State::READING_HEADERS) {
 }
 
@@ -978,7 +978,7 @@ bool Connection::sendResponse(std::shared_ptr<Response> response) {
     _transferEncoding = TransferEncoding::Raw;
     _chunk = 0;
     _response = response;
-    _response->handle(_writer);
+    _response->handle(_writer.get());
     return true;
 }
 
