@@ -171,10 +171,10 @@ constexpr size_t MaxHeadersSize = 64 * 1024;
 
 class PrefixWrapper : public seasocks::Logger {
     std::string _prefix;
-    std::shared_ptr<Logger> _logger;
+    Logger* _logger;
 
 public:
-    PrefixWrapper(const std::string& prefix, std::shared_ptr<Logger> logger)
+    PrefixWrapper(const std::string& prefix, Logger* logger)
             : _prefix(prefix), _logger(logger) {
     }
 
@@ -234,11 +234,11 @@ struct Connection::Writer : ResponseWriter {
 };
 
 Connection::Connection(
-    std::shared_ptr<Logger> logger,
+    Logger* logger,
     ServerImpl& server,
     NativeSocketType fd,
     const sockaddr_in& address)
-        : _logger(std::make_shared<PrefixWrapper>(formatAddress(address) + " : ", logger)),
+    : _logger(std::make_unique<PrefixWrapper>( formatAddress(address) + " : ", logger )),
           _server(server),
           _fd(fd),
           _shutdown(false),

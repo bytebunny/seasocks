@@ -142,8 +142,8 @@ static inline void init_winsock() {
 
 constexpr size_t Server::DefaultClientBufferSize;
 
-Server::Server(std::shared_ptr<Logger> logger)
-        : _logger(logger), _listenSock(InvalidSocket), _epollFd(EpollBadHandle), _eventFd(EpollBadHandle),
+Server::Server(std::unique_ptr<Logger> logger)
+        : _logger(std::move(logger)), _listenSock(InvalidSocket), _epollFd(EpollBadHandle), _eventFd(EpollBadHandle),
           _maxKeepAliveDrops(0),
           _lameConnectionTimeoutSeconds(DefaultLameConnectionTimeoutSeconds),
           _clientBufferSize(DefaultClientBufferSize),
@@ -594,7 +594,7 @@ void Server::handleAccept() {
         return;
     }
     LS_INFO(_logger, formatAddress(address) << " : Accepted on descriptor " << fd);
-    Connection* newConnection = new Connection(_logger, *this, fd, address);
+    Connection* newConnection = new Connection(_logger.get(), *this, fd, address);
     epoll_event event = {EPOLLIN, {newConnection}};
     if (epoll_ctl(_epollFd, EPOLL_CTL_ADD, fd, &event) == -1) {
         LS_ERROR(_logger, "Unable to add socket to epoll: " << getLastError());

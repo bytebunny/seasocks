@@ -111,9 +111,9 @@ int main(int /*argc*/, const char* /*argv*/[]) {
     if (!checkDir())
         return -1;
 
-    auto logger = std::make_shared<PrintfLogger>(Logger::Level::Debug);
+    auto logger = std::make_unique< PrintfLogger >(Logger::Level::Debug);
 
-    Server server(logger);
+    Server server( std::move( logger ) );
 
     auto handler = std::make_shared<MyHandler>(&server);
     server.addWebSocketHandler("/ws", handler);

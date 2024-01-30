@@ -70,7 +70,7 @@ class Response;
 
 class Server : private ServerImpl {
 public:
-    explicit Server(std::shared_ptr<Logger> logger);
+    explicit Server(std::unique_ptr<Logger> logger);
     virtual ~Server();
 
     void addPageHandler(std::shared_ptr<PageHandler> handler);
@@ -192,7 +192,7 @@ private:
 
     // Connections, mapped to initial connection time.
     std::map<Connection*, time_t> _connections;
-    std::shared_ptr<Logger> _logger;
+    std::unique_ptr<Logger> _logger;
     NativeSocketType _listenSock;
     EpollHandle _epollFd;
     EpollHandle _eventFd;

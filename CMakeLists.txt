@@ -15,7 +15,7 @@ option(SEASOCKS_SHARED "Build seasocks as a shared library" "${BUILD_SHARED_LIBS
 option(UNITTESTS "Build unittests." ON)
 option(COVERAGE "Build with code coverage enabled" OFF)
 option(SEASOCKS_EXAMPLE_APP "Build the example applications." ON)
-option(DEFLATE_SUPPORT "Include support for deflate (requires zlib)." ON)
+option(DEFLATE_SUPPORT "Include support for deflate (requires zlib)." OFF)
 
 if (DEFLATE_SUPPORT)
     set(DEFLATE_SUPPORT_BOOL "true")

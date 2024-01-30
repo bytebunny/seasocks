@@ -57,7 +57,7 @@ class Response;
 class Connection : public WebSocket {
 public:
     Connection(
-        std::shared_ptr<Logger> logger,
+        Logger* logger,
         ServerImpl& server,
         NativeSocketType fd,
         const sockaddr_in& address);
@@ -117,8 +117,8 @@ public:
     }
     void handleHixieWebSocket();
     void handleHybiWebSocket();
-    void setHandler(std::shared_ptr<WebSocket::Handler> handler) {
-        _webSocketHandler = handler;
+    void setHandler(std::unique_ptr<WebSocket::Handler> handler) {
+        _webSocketHandler = std::move( handler );
     }
     void handleNewData();
 
@@ -194,7 +194,7 @@ private:
     std::list<Range> processRangesForStaticData(const std::list<Range>& ranges,
                                                 long fileSize);
 
-    std::shared_ptr<Logger> _logger;
+    std::unique_ptr< Logger> _logger;
     ServerImpl& _server;
     NativeSocketType _fd;
     bool _shutdown;
