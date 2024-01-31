@@ -40,7 +40,7 @@ CrackedUriPageHandler::Ptr RootPageHandler::add(const CrackedUriPageHandler::Ptr
     return _handlers.back();
 }
 
-std::shared_ptr<Response> RootPageHandler::handle(const Request& request) {
+std::unique_ptr<Response> RootPageHandler::handle(const Request& request) {
     CrackedUri uri(request.getRequestUri());
     for (const auto& it : _handlers) {
         auto response = it->handle(uri, request);

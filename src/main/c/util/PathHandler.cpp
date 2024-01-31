@@ -36,7 +36,7 @@ CrackedUriPageHandler::Ptr PathHandler::add(const CrackedUriPageHandler::Ptr& ha
     return _handlers.back();
 }
 
-std::shared_ptr<Response> PathHandler::handle(
+std::unique_ptr<Response> PathHandler::handle(
     const CrackedUri& uri, const Request& request) {
     const auto& path = uri.path();
     if (path.empty() || path[0] != _path) {

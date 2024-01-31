@@ -933,9 +933,9 @@ bool Connection::processHeaders(uint8_t* first, uint8_t* last) {
 }
 
 bool Connection::handlePageRequest() {
-    std::shared_ptr<Response> response;
+    std::unique_ptr<Response> response;
     try {
-        response = _server.handle(*_request);
+        response = std::move( _server.handle(*_request) );
     } catch (const std::exception& e) {
         LS_ERROR(_logger, "page error: " << e.what());
         return sendISE(e.what());
@@ -966,10 +966,10 @@ bool Connection::handlePageRequest() {
         auto hybiKey = _request->getHeader("Sec-WebSocket-Key");
         return handleHybiHandshake(webSocketVersion, hybiKey);
     }
-    return sendResponse(response);
+    return sendResponse( std::move(response) );
 }
 
-bool Connection::sendResponse(std::shared_ptr<Response> response) {
+bool Connection::sendResponse(std::unique_ptr<Response> response) {
     if (response == Response::unhandled()) {
         return sendStaticData();
     }
@@ -977,7 +977,7 @@ bool Connection::sendResponse(std::shared_ptr<Response> response) {
     _state = State::AWAITING_RESPONSE_BEGIN;
     _transferEncoding = TransferEncoding::Raw;
     _chunk = 0;
-    _response = response;
+    _response = std::move( response );
     _response->handle(_writer.get());
     return true;
 }

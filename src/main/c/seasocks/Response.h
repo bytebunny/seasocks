@@ -43,7 +43,7 @@ public:
     // Called when the connection this response is being sent on is closed.
     virtual void cancel() = 0;
 
-    static std::shared_ptr<Response> unhandled();
+    static std::unique_ptr<Response> unhandled();
 
     static std::shared_ptr<Response> notFound();
 

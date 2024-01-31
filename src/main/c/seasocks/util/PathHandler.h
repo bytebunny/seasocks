@@ -67,7 +67,7 @@ public:
         addMany(std::forward<Rest>(rest)...);
     }
 
-    virtual std::shared_ptr<Response> handle(
+    virtual std::unique_ptr<Response> handle(
         const CrackedUri& uri, const Request& request) override;
 };
 

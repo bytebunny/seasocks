@@ -161,7 +161,7 @@ private:
     void sendHybiData(const uint8_t* webSocketResponse, size_t messageLength);
 
 
-    bool sendResponse(std::shared_ptr<Response> response);
+    bool sendResponse(std::unique_ptr<Response> response);
 
     bool processHeaders(uint8_t* first, uint8_t* last);
     bool sendData(const std::string& type, const char* start, size_t size);
@@ -209,7 +209,7 @@ private:
     std::shared_ptr<WebSocket::Handler> _webSocketHandler;
     bool _shutdownByUser;
     std::unique_ptr<PageRequest> _request;
-    std::shared_ptr<Response> _response;
+    std::unique_ptr<Response> _response;
     TransferEncoding _transferEncoding;
     unsigned _chunk;
     std::unique_ptr<Writer> _writer;

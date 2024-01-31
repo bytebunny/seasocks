@@ -39,7 +39,7 @@ class PageHandler {
 public:
     virtual ~PageHandler() = default;
 
-    virtual std::shared_ptr<Response> handle(const Request& request) = 0;
+    virtual std::unique_ptr<Response> handle(const Request& request) = 0;
 };
 
 }

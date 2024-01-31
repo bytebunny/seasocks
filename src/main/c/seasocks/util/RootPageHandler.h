@@ -43,7 +43,7 @@ public:
     CrackedUriPageHandler::Ptr add(const CrackedUriPageHandler::Ptr& handler);
 
     // From PageHandler.
-    virtual std::shared_ptr<Response> handle(const Request& request) override;
+    virtual std::unique_ptr<Response> handle(const Request& request) override;
 };
 
 }

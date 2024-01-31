@@ -29,9 +29,8 @@
 
 namespace seasocks {
 
-std::shared_ptr<Response> Response::unhandled() {
-    static std::shared_ptr<Response> unhandled;
-    return unhandled;
+std::unique_ptr<Response> Response::unhandled() {
+    return nullptr;
 }
 
 std::shared_ptr<Response> Response::notFound() {
